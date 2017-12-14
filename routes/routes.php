@@ -146,6 +146,13 @@ class routes
         $route->method = 'store';
         $routes[] = $route;
 
+        $route = new route();
+        $route->http_method = 'POST';
+        $route->action = 'all';
+        $route->page = 'tasks';
+        $route->controller = 'tasksController';
+        $route->method = 'all';
+        $routes[] = $route;
 
         return $routes;
     }
