@@ -18,8 +18,8 @@
 <body>
 
 
-<form action="index.php?page=tasks&action=register" method="post">
-    Create Date: <input type="text" name="createdate"><br>
+<form action="index.php?page=tasks&action=store" method="post">
+    Create Date: <input type="text" name="createddate"><br>
     Due Date: <input type="text" name="duedate"><br>
     Message: <input type="text" name="message"><br>
     Done?: <input type="text" name="isdone"><br>
