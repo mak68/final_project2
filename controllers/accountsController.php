@@ -118,7 +118,8 @@ class accountsController extends http\controller
         //after you login you can use the header function to forward the user to a page that displays their tasks.
         //        $record = accounts::findUser($_POST['email']);
 
-        $user = accounts::findUserbyEmail($_REQUEST['email']);
+        $user = accounts::findUserbyEmail($_POST['email']);
+        print_r($user);
 
 
         if ($user == FALSE) {
@@ -131,7 +132,7 @@ class accountsController extends http\controller
 
                 session_start();
                 $_SESSION["userID"] = $user->id;
-                $_SESSION["email"]= $user->email;
+                $_SESSION["email"]= $_POST['email'];
                 header("Location: index.php?page=tasks&action=all");
 
                 //forward the user to the show all todos page
