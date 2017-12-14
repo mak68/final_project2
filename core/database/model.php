@@ -9,17 +9,23 @@ abstract class model
     public function save()
     {
 
-        if($this->validate() == FALSE) {
-            echo 'failed validation';
-            exit;
-        }
-
+//        if($this->validate() == FALSE) {
+  //          echo 'failed validation';
+      //      exit;
+    //    }
+            $INSERT = false;
 
         if ($this->id != '') {
+
+
+
             $sql = $this->update();
         } else {
+
+
             $sql = $this->insert();
             $INSERT = TRUE;
+
         }
         $db = dbConn::getConnection();
         $statement = $db->prepare($sql);
@@ -34,7 +40,9 @@ abstract class model
         foreach (array_flip($array) as $key => $value) {
             $statement->bindParam(":$value", $this->$value);
         }
+
         $statement->execute();
+
         if ($INSERT == TRUE) {
 
             $this->id = $db->lastInsertId();
@@ -49,6 +57,7 @@ abstract class model
 
     private function insert()
     {
+
 
         $modelName = static::$modelName;
         $tableName = $modelName::getTablename();
