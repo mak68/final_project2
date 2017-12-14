@@ -22,7 +22,8 @@ class tasksController extends http\controller
 
     public static function all()
     {
-        $records = todos::findAll();
+        session_start();
+        $records = todos::findTasksbyID($_SESSION['userID']);
         /*session_start();
            if(key_exists('userID',$_SESSION)) {
                $userID = $_SESSION['userID'];
@@ -34,8 +35,17 @@ class tasksController extends http\controller
 
         $records = todos::findTasksbyID($userID);
         */
-        self::getTemplate('all_tasks', $records);
 
+        if($records==false)
+        {
+
+            self::getTemplate('create_task');
+
+        }
+        else
+            {
+            self::getTemplate('all_tasks', $records);
+        }
     }
     //to call the show function the url is called with a post to: index.php?page=task&action=create
     //this is a function to create new tasks
@@ -60,20 +70,31 @@ class tasksController extends http\controller
     public static function store()
     {
 
+        session_start();
+        $task = new todo();
+        $task->id = $_SESSION['userID'];
+        $task->createdate = $_POST['createddate'];
+        $task->duedate = $_POST['duedate'];
+        $task->message = $_POST['message'];
+        $task->isdone = $_POST['isdone'];
+        $task->ownerid = $_SESSION['userID'];
+        $task->owneremail= $_POST['email'];
+        $task->save();
 
-        $record = todos::findOne($_REQUEST['id']);
-        $record->body = $_REQUEST['body'];
-        $record->save();
-        print_r($_POST);
 
     }
 
     public static function save() {
         session_start();
         $task = new todo();
-
-        $task->body = $_POST['body'];
+        //$task->id = $_SESSION['userID'];
+        $task->createdate = $_POST['createddate'];
+        $task->duedate = $_POST['duedate'];
+        $task->message = $_POST['message'];
+        $task->isdone = $_POST['isdone'];
         $task->ownerid = $_SESSION['userID'];
+        $task->owneremail= $_POST['email'];
+
         $task->save();
 
     }
