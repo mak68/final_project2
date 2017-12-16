@@ -54,7 +54,7 @@ class tasksController extends http\controller
 
     public static function create()
     {
-        print_r($_POST);
+        self::getTemplate('create_task');
     }
 
     //this is the function to view edit record form
@@ -107,6 +107,7 @@ class tasksController extends http\controller
     //One form is the todo and the other is just for the delete button
     public static function delete()
     {
+        session_start();
         $record = todos::findOne($_REQUEST['id']);
         $record->delete();
         header("Location: index.php?page=tasks&action=all");
