@@ -4,4 +4,4 @@
 <h1>Page Not Found 404</h1>
 
 
-<?php include ‘footer.php' ?>
+<?php include 'footer.php' ?>

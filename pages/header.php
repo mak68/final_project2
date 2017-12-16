@@ -17,7 +17,7 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="https://web.njit.edu/~mak68/mvc/index.php?page=todos&action=all">MY Task Site</a>
+    <a class="navbar-brand" href="https://web.njit.edu/~mak68/mvc/index.php?page=tasks&action=all">MY Task Site</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
