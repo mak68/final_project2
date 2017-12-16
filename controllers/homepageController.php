@@ -36,4 +36,12 @@ class homepageController extends http\controller
         print_r($_POST);
     }
 
+    public static function logout()
+    {
+        session_destroy();
+        header("location: https://web.njit.edu/~mak68/mvc/ ");
+
+    }
+
+
 }
