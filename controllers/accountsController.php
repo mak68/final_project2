@@ -23,9 +23,10 @@ class accountsController extends http\controller
 
     public static function all()
     {
-
-        $records = accounts::findAll();
-        self::getTemplate('all_accounts', $records);
+        session_start();
+        $records = accounts::findUserbyEmail($_SESSION['email']);
+        //print_r($records);
+        self::getTemplate('edit_account', $records);
 
     }
     //to call the show function the url is called with a post to: index.php?page=task&action=create
@@ -89,8 +90,8 @@ class accountsController extends http\controller
 //this is used to save the update form data
     public static function save() {
         $user = accounts::findOne($_REQUEST['id']);
-
-        $user->email = $_POST['email'];
+        $user->id = $_SESSION['userID'];
+        $user->email = $_SESSION['email'];
         $user->fname = $_POST['fname'];
         $user->lname = $_POST['lname'];
         $user->phone = $_POST['phone'];
@@ -119,11 +120,13 @@ class accountsController extends http\controller
         //        $record = accounts::findUser($_POST['email']);
 
         $user = accounts::findUserbyEmail($_POST['email']);
-        print_r($user);
+        
 
 
         if ($user == FALSE) {
             echo 'user not found';
+
+
         } else {
 
             if($user->checkPassword($_POST['password']) == TRUE) {
