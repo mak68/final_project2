@@ -15,7 +15,7 @@
 
     Gender: <input type="text" name="gender" value=" <?php echo $array['gender'] ?>" ><br>
 
-    Password: <input type="text" name="password" value=" <?php echo $array['password'] ?>" ><br>
+    
 
     <input type="submit" value="Submit form">
 </form>

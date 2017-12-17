@@ -48,10 +48,7 @@
                             <label for="password" class="youpasswd" data-icon="p"> Your password </label>
                             <input id="password" name="password" required="required" type="password" placeholder="" />
                         </p>
-                        <p class="keeplogin">
-                            <input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" />
-                            <label for="loginkeeping">Keep me logged in</label>
-                        </p>
+                        
                         <p class="login button">
                             <input type="submit" value="Login" />
                         </p>
@@ -63,7 +60,7 @@
                 </div>
 
                 <div id="register" class="animate form">
-                    <form  action="index.php?page=accounts&action=register" method="post" autocomplete="on">
+                    <form  action="index.php?page=accounts&action=store" method="post" autocomplete="on">
                         <h1> Sign up </h1>
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">First Name</label>
@@ -79,7 +76,7 @@
                         </p>
                         <p>
                             <label for="emailsignup" class="youmail" data-icon="u" > Phone</label>
-                            <input id="emailsignup" name="Phone" required="required" type="text" placeholder=""/>
+                            <input id="emailsignup" name="phone" required="required" type="text" placeholder=""/>
                         </p>
                         <p>
                             <label for="emailsignup" class="uname" data-icon="u" > Birthday</label>

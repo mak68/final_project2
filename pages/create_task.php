@@ -5,7 +5,7 @@
     Create Date: <input type="text" name="createddate"><br>
     Due Date: <input type="text" name="duedate"><br>
     Message: <input type="text" name="message"><br>
-    Done?: <input type="text" name="isdone"><br>
+    Done(y=1,n=0): <input type="text" name="isdone"><br>
     <input type="submit" value="Submit form">
 </form>
 
