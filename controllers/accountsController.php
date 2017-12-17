@@ -46,49 +46,55 @@ class accountsController extends http\controller
     public static function store()
 
     {
-        $user = accounts::findUserbyEmail($_REQUEST['email']);
 
 
-        if ($user == FALSE) {
-            $user = new account();
-            $user->email = $_POST['email'];
-            $user->fname = $_POST['fname'];
-            $user->lname = $_POST['lname'];
-            $user->phone = $_POST['phone'];
-            $user->birthday = $_POST['birthday'];
-            $user->gender = $_POST['gender'];
-            //$user->password = $_POST['password'];
-            //this creates the password
-            //this is a mistake you can fix...
-            //Turn the set password function into a static method on a utility class.
+        if (utility\validate::password($_POST['password']) == true) {
+
+            $user = accounts::findUserbyEmail($_REQUEST['email']);
 
 
+            if ($user == FALSE) {
+                $user = new account();
+                $user->email = $_POST['email'];
+                $user->fname = $_POST['fname'];
+                $user->lname = $_POST['lname'];
+                $user->phone = $_POST['phone'];
+                $user->birthday = $_POST['birthday'];
+                $user->gender = $_POST['gender'];
+                //$user->password = $_POST['password'];
+                //this creates the password
+                //this is a mistake you can fix...
+                //Turn the set password function into a static method on a utility class.
+                $user->password = $user->setPassword($_POST['password']);
+                $user->save();
 
+                $_SESSION['email'] = $_POST['email'];
+                $_SESSION['userID'] = $user->id;
 
+                //you may want to send the person to a
+                // login page or create a session and log them in
+                // and then send them to the task list page and a link to create tasks
+                header("Location: index.php?page=tasks&action=all");
 
-            if(utility\validate::password($_POST['password'])==false)
-            {
-                echo 'password must be 6 characters';
-                exit;
+            } else {
+                //You can make a template for errors called error.php
+                // and load the template here with the error you want to show.
+                // echo 'already registered';
+                $error = 'already registered';
+                self::getTemplate('error', $error);
+
             }
-            $user->password = $user->setPassword($_POST['password']);
-            $user->save();
-
-            //you may want to send the person to a
-            // login page or create a session and log them in
-            // and then send them to the task list page and a link to create tasks
-            header("Location: index.php?page=accounts&action=all");
-
-        } else {
-            //You can make a template for errors called error.php
-            // and load the template here with the error you want to show.
-           // echo 'already registered';
-            $error = 'already registered';
-            self::getTemplate('error', $error);
 
         }
 
+    else
+    {
+
+        echo "password must be 6 characters";
     }
+    }
+
+
 
     public static function edit()
     {
@@ -109,7 +115,7 @@ class accountsController extends http\controller
         $user->gender = $_POST['gender'];
 
         $user->save();
-        header("Location: index.php?page=accounts&action=all");
+        header("Location: index.php?page=tasks&action=all");
 
     }
 
@@ -117,7 +123,8 @@ class accountsController extends http\controller
 
         $record = accounts::findOne($_REQUEST['id']);
         $record->delete();
-        header("Location: index.php?page=accounts&action=all");
+
+        header("Location: index.php?page=tasks&action=all");
     }
 
     //this is to login, here is where you find the account and allow login or deny.
@@ -132,7 +139,7 @@ class accountsController extends http\controller
 
 
 
-        if(utility\validate::password($_POST['password'])==true) {
+
 
 
             $user = accounts::findUserbyEmail($_POST['email']);
@@ -162,14 +169,7 @@ class accountsController extends http\controller
             }
         }
 
-        else
-        {
-            echo 'Password must be 6 characters';
-        }
 
 
-
-
-    }
 
 }

@@ -23,6 +23,8 @@ class tasksController extends http\controller
     public static function all()
     {
         session_start();
+
+
         $records = todos::findTasksbyID($_SESSION['userID']);
         /*session_start();
            if(key_exists('userID',$_SESSION)) {
@@ -66,7 +68,7 @@ class tasksController extends http\controller
 
     }
 
-    //this would be for the post for sending the task edit form
+
     public static function store()
     {
 
@@ -88,8 +90,10 @@ class tasksController extends http\controller
 
     public static function save() {
         session_start();
+
+        //print_r($_REQUEST);
         $task = new todo();
-        $task->id = $_SESSION['userID'];
+        $task->id = $_REQUEST['id'];
         $task->createddate = $_POST['createddate'];
         $task->duedate = $_POST['duedate'];
         $task->message = $_POST['message'];
@@ -97,9 +101,11 @@ class tasksController extends http\controller
         $task->ownerid = $_SESSION['userID'];
         $task->owneremail= $_SESSION['email'];
 
+        //print_r($task);
+
         $task->save();
 
-        header("Location: index.php?page=tasks&action=all");
+       header("Location: index.php?page=tasks&action=all");
 
     }
 
@@ -107,7 +113,9 @@ class tasksController extends http\controller
     //One form is the todo and the other is just for the delete button
     public static function delete()
     {
-        session_start();
+
+
+        
         $record = todos::findOne($_REQUEST['id']);
         $record->delete();
         header("Location: index.php?page=tasks&action=all");
@@ -120,6 +128,22 @@ class tasksController extends http\controller
         $records = todos::findAll();
 
             self::getTemplate('all_tasks', $records);
+        }
+
+        public static function action()
+        {
+            if ($_POST['btSubmit']=='Edit') {
+
+                tasksController::show();
+
+
+
+            }
+            elseif ($_POST['btSubmit']=='Delete') {
+
+                tasksController::delete();
+            }
+
         }
 
 
