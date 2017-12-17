@@ -61,6 +61,16 @@ class accountsController extends http\controller
             //this creates the password
             //this is a mistake you can fix...
             //Turn the set password function into a static method on a utility class.
+
+
+
+
+
+            if(utility\validate::password($_POST['password'])==false)
+            {
+                echo 'password must be 6 characters';
+                exit;
+            }
             $user->password = $user->setPassword($_POST['password']);
             $user->save();
 
@@ -97,6 +107,7 @@ class accountsController extends http\controller
         $user->phone = $_POST['phone'];
         $user->birthday = $_POST['birthday'];
         $user->gender = $_POST['gender'];
+
         $user->save();
         header("Location: index.php?page=accounts&action=all");
 
@@ -119,31 +130,41 @@ class accountsController extends http\controller
         //after you login you can use the header function to forward the user to a page that displays their tasks.
         //        $record = accounts::findUser($_POST['email']);
 
-        $user = accounts::findUserbyEmail($_POST['email']);
-        
 
 
-        if ($user == FALSE) {
-            echo 'user not found';
+        if(utility\validate::password($_POST['password'])==true) {
 
 
-        } else {
+            $user = accounts::findUserbyEmail($_POST['email']);
 
-            if($user->checkPassword($_POST['password']) == TRUE) {
 
-                echo 'login';
+            if ($user == FALSE) {
+                echo 'user not found';
 
-                session_start();
-                $_SESSION["userID"] = $user->id;
-                $_SESSION["email"]= $_POST['email'];
-                header("Location: index.php?page=tasks&action=all");
 
-                //forward the user to the show all todos page
-               // print_r($_SESSION);
             } else {
-                echo 'password does not match';
-            }
 
+                if ($user->checkPassword($_POST['password']) == TRUE) {
+
+                    echo 'login';
+
+                    session_start();
+                    $_SESSION["userID"] = $user->id;
+                    $_SESSION["email"] = $_POST['email'];
+                    header("Location: index.php?page=tasks&action=all");
+
+                    //forward the user to the show all todos page
+                    // print_r($_SESSION);
+                } else {
+                    echo 'password does not match';
+                }
+
+            }
+        }
+
+        else
+        {
+            echo 'Password must be 6 characters';
         }
 
 
