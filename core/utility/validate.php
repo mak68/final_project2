@@ -6,16 +6,16 @@ class validate
 {
     static function password($data)
     {
-        if(count($data)==6)
+        if(!count($data)>=6)
         {
-            return true;
+            return false;
 
         }
 
         else
         {
 
-            return false;
+            return true;
         }
 
 
