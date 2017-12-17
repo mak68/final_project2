@@ -138,13 +138,6 @@ class routes
         $route->method = 'register';
         $routes[] = $route;
         //this handles the reg post to create the user
-        $route = new route();
-        $route->http_method = 'POST';
-        $route->action = 'register';
-        $route->page = 'accounts';
-        $route->controller = 'accountsController';
-        $route->method = 'store';
-        $routes[] = $route;
 
         $route = new route();
         $route->http_method = 'POST';
@@ -194,7 +187,40 @@ class routes
         $route->method = 'create';
         $routes[] = $route;
 
-       
+        $route = new route();
+        $route->http_method = 'POST';
+        $route->action = 'store';
+        $route->page = 'accounts';
+        $route->controller = 'accountsController';
+        $route->method = 'store';
+        $routes[] = $route;
+
+        $route = new route();
+        $route->http_method = 'POST';
+        $route->action = 'all';
+        $route->page = 'tasks';
+        $route->controller = 'tasksController';
+        $route->method = 'all';
+        $routes[] = $route;
+
+        $route = new route();
+        $route->http_method = 'POST';
+        $route->action = 'action';
+        $route->page = 'tasks';
+        $route->controller = 'tasksController';
+        $route->method = 'action';
+        $routes[] = $route;
+
+        $route = new route();
+        $route->http_method = 'POST';
+        $route->action = 'delete';
+        $route->page = 'tasks';
+        $route->controller = 'tasksController';
+        $route->method = 'delete';
+        $routes[] = $route;
+
+
+
 
         return $routes;
     }
