@@ -25,7 +25,8 @@ class tasksController extends http\controller
         session_start();
 
 
-        $records = todos::findTasksbyID($_SESSION['userID']);
+        print_r($_SESSION);
+       // $records = todos::findTasksbyID($_SESSION['userID']);
         /*session_start();
            if(key_exists('userID',$_SESSION)) {
                $userID = $_SESSION['userID'];

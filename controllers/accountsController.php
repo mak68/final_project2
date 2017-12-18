@@ -66,11 +66,14 @@ class accountsController extends http\controller
                 //this is a mistake you can fix...
                 //Turn the set password function into a static method on a utility class.
                 $user->password = $user->setPassword($_POST['password']);
-                $user->save();
+               $user->save();
+
+
 
                 $_SESSION['email'] = $_POST['email'];
                 $_SESSION['userID'] = $user->id;
 
+                print_r($_SESSION);
                 //you may want to send the person to a
                 // login page or create a session and log them in
                 // and then send them to the task list page and a link to create tasks
