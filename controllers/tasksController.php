@@ -14,6 +14,7 @@ class tasksController extends http\controller
     //to call the show function the url is index.php?page=task&action=show
     public static function show()
     {
+        //session_start();
         $record = todos::findOne($_REQUEST['id']);
         self::getTemplate('show_task', $record);
     }
@@ -22,34 +23,32 @@ class tasksController extends http\controller
 
     public static function all()
     {
-        session_start();
+       session_start();
 
+        //print_r($_SESSION);
+        //print_r($_SESSION['userID']);
+        //print_r($_SESSION['ID']);
+       // print_r() ;
+       $records = todos::findTasksbyID($_COOKIE['id']);
+      
 
-        print_r($_SESSION);
-       // $records = todos::findTasksbyID($_SESSION['userID']);
-        /*session_start();
-           if(key_exists('userID',$_SESSION)) {
-               $userID = $_SESSION['userID'];
-           } else {
-
-               echo 'you must be logged in to view tasks';
-           }
-        $userID = $_SESSION['userID'];
-
-        $records = todos::findTasksbyID($userID);
-        */
 
         if($records==false)
         {
 
-            self::getTemplate('create_task');
+          self::getTemplate('create_task');
 
         }
         else
             {
-            self::getTemplate('all_tasks', $records);
+        self::getTemplate('all_tasks', $records);
         }
     }
+    //public static function session()
+    //{
+      //  session_start();
+        //print_r($_SESSION);
+    //}
     //to call the show function the url is called with a post to: index.php?page=task&action=create
     //this is a function to create new tasks
 
@@ -57,15 +56,21 @@ class tasksController extends http\controller
 
     public static function create()
     {
+        //session_start();
         self::getTemplate('create_task');
     }
 
     //this is the function to view edit record form
     public static function edit()
     {
+        //session_start();
+        //$record = todos::findOne($_REQUEST['id']);
         $record = todos::findOne($_REQUEST['id']);
-
         self::getTemplate('edit_task', $record);
+
+        //$result1 = get_object_vars($record);
+
+        //self::getTemplate('edit_task', $result1);
 
     }
 
@@ -75,22 +80,25 @@ class tasksController extends http\controller
 
         session_start();
         $task = new todo();
-       // $task->id = $_SESSION['userID'];
+        //$task->id = $_SESSION['userID'];
         $task->createddate = $_POST['createddate'];
         $task->duedate = $_POST['duedate'];
         $task->message = $_POST['message'];
         $task->isdone = $_POST['isdone'];
-        $task->ownerid = $_SESSION['userID'];
-        $task->owneremail= $_SESSION['email'];
+        $task->ownerid = $_COOKIE['id'];
+        $task->owneremail= $_COOKIE['email'];
         //print_r($task);
         $task->save();
-       header("Location: index.php?page=tasks&action=all");
+      header("Location: index.php?page=tasks&action=all");
 
 
     }
 
     public static function save() {
+
+
         session_start();
+
 
         //print_r($_REQUEST);
         $task = new todo();
@@ -99,8 +107,8 @@ class tasksController extends http\controller
         $task->duedate = $_POST['duedate'];
         $task->message = $_POST['message'];
         $task->isdone = $_POST['isdone'];
-        $task->ownerid = $_SESSION['userID'];
-        $task->owneremail= $_SESSION['email'];
+        $task->ownerid = $_COOKIE['id'];
+        $task->owneremail= $_COOKIE['email'];
 
         //print_r($task);
 

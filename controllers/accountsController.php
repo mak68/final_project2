@@ -23,8 +23,11 @@ class accountsController extends http\controller
 
     public static function all()
     {
+
         session_start();
-        $records = accounts::findUserbyEmail($_SESSION['email']);
+
+        //$records = accounts::findUserbyEmail($_SESSION['email']);
+        $records = accounts::findOne($_COOKIE['id']);
         //print_r($records);
         self::getTemplate('edit_account', $records);
 
@@ -41,6 +44,8 @@ class accountsController extends http\controller
         //USE THE ABOVE TO SEE HOW TO USE Bcrypt
         self::getTemplate('register');
     }
+
+
 
     //this is the function to save the user the new user for registration
     public static function store()
@@ -66,18 +71,32 @@ class accountsController extends http\controller
                 //this is a mistake you can fix...
                 //Turn the set password function into a static method on a utility class.
                 $user->password = $user->setPassword($_POST['password']);
-               $user->save();
+                  $user->save();
 
+                //$user1 = accounts::findUserbyEmail($user->email);
+
+                $cookie_name = "id";
+                $cooke_email = "email";
+                $cookie_value = $user->id;
+                $cookie_value1 = $user->email;
+                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+                setcookie($cooke_email, $cookie_value1, time() + (86400 * 30), "/");
 
 
                 $_SESSION['email'] = $_POST['email'];
                 $_SESSION['userID'] = $user->id;
 
-                print_r($_SESSION);
+                //$_SESSION['email'] = $user->email;
+                //$_SESSION['userID'] = $user1->id;
+                //$_SESSION['id'] = $user1->id;
+
+               // print_r($_SESSION['userID']);
+
+
                 //you may want to send the person to a
                 // login page or create a session and log them in
                 // and then send them to the task list page and a link to create tasks
-                header("Location: index.php?page=tasks&action=all");
+               header("Location:https://web.njit.edu/~mak68/mvc/index.php?page=tasks&action=all");
 
             } else {
                 //You can make a template for errors called error.php
@@ -109,8 +128,8 @@ class accountsController extends http\controller
 //this is used to save the update form data
     public static function save() {
         $user = accounts::findOne($_REQUEST['id']);
-        $user->id = $_SESSION['userID'];
-        $user->email = $_SESSION['email'];
+        $user->id = $_COOKIE['id'];
+        $user->email = $_COOKIE['email'];
         $user->fname = $_POST['fname'];
         $user->lname = $_POST['lname'];
         $user->phone = $_POST['phone'];
@@ -158,9 +177,13 @@ class accountsController extends http\controller
 
                     echo 'login';
 
-                    session_start();
-                    $_SESSION["userID"] = $user->id;
-                    $_SESSION["email"] = $_POST['email'];
+                    $cookie_name = "id";
+                    $cooke_email = "email";
+                    $cookie_value = $user->id;
+                    $cookie_value1 = $user->email;
+                    setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+                    setcookie($cooke_email, $cookie_value1, time() + (86400 * 30), "/");
+
                     header("Location: index.php?page=tasks&action=all");
 
                     //forward the user to the show all todos page

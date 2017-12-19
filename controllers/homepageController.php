@@ -39,6 +39,9 @@ class homepageController extends http\controller
     public static function logout()
     {
         session_destroy();
+
+        setcookie("id", "", time() - 3600);
+        setcookie("email", "", time() - 3600);
         header("location: https://web.njit.edu/~mak68/mvc/ ");
 
     }
