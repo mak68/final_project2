@@ -2,7 +2,7 @@
 
 <?php $array = get_object_vars($data); ?>
 
-<form action="index.php?page=accounts&action=register" method="post">
+<form action="index.php?page=accounts&action=save&id=<?php echo $array['id']?>" method="post">
     First name: <input type="text" name="fname" value="<?php echo $array['fname']?>" > <br>
 
     Last name: <input type="text" name="lname" value="<?php echo $array['lname'] ?>" ><br>

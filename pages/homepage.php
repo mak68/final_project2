@@ -60,7 +60,7 @@
                 </div>
 
                 <div id="register" class="animate form">
-                    <form  action="index.php?page=accounts&action=store" method="post" autocomplete="on">
+                    <form  action="index.php?page=accounts&action=store" method="POST" autocomplete="on">
                         <h1> Sign up </h1>
                         <p>
                             <label for="usernamesignup" class="uname" data-icon="u">First Name</label>
